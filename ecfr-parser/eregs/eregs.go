@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/cmsgov/cmcs-eregulations/ecfr-parser/ecfr"
 	"github.com/cmsgov/cmcs-eregulations/ecfr-parser/parseXML"
@@ -16,6 +17,11 @@ var BaseURL string
 var client = &http.Client{
 	Transport: &http.Transport{},
 }
+
+var (
+	username = os.Getenv("EREGS_USERNAME")
+	password = os.Getenv("EREGS_PASSWORD")
+)
 
 type Part struct {
 	Title     int             `json:"title,string" xml:"-"`
@@ -39,6 +45,7 @@ func PostPart(ctx context.Context, p *Part) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	req.SetBasicAuth(username, password)
 	resp, err := client.Do(req)
 	if err != nil {
 		return resp, err

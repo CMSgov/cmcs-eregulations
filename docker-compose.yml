@@ -40,6 +40,8 @@ services:
     environment:
       ALLOWED_HOST: regulations-core
       DJANGO_SETTINGS_MODULE: regcore.settings.pgsql
+      HTTP_AUTH_USER: RpSS01rhbx
+      HTTP_AUTH_PASSWORD: UkOAsfkItN
       PYTHONPATH: /var/lib/eregs
     ports:
       - 8080:8080
